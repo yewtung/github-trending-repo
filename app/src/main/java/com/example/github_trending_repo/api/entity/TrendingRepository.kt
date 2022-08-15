@@ -1,20 +1,26 @@
 package com.example.github_trending_repo.api.entity
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
- class TrendingRepository {
-    @SerializedName("author")
-    @Expose
-    var author: String? = null
+data class TrendingRepository(
 
+    var author: String,
 
-    @SerializedName("name")
-    @Expose
-    var name: String? = null
+    var name: String,
 
     @SerializedName("avatar")
-    @Expose
-    var image: String? = null
+    var image: String,
+
+    var stars: Int,
+
+    var forks: Int,
+
+    var language: String,
+
+    var description: String,
+) : Serializable {
+
+    var isExpand: Boolean = false
 }

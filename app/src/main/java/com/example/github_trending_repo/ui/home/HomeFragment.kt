@@ -52,12 +52,6 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
         rv_repo.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = repoListAdapter
-            repoListAdapter.setOnItemClickListener { item, _ ->
-                (item as? ListCellItem)?.let { repoItem ->
-
-                }
-
-            }
         }
     }
 
@@ -77,7 +71,9 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
                         repoListAdapter.clear()
                         repoListAdapter.addAll(
                             list.map { item ->
-                                ListCellItem(item as? TrendingRepository)
+                                (item as? TrendingRepository)?.let {
+                                        it1 -> ListCellItem(it1)
+                                }
                             }
                         )
                     }

@@ -6,6 +6,7 @@ pluginManagement {
         maven {
             url 'https://www.jitpack.io'
         }
+        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -16,6 +17,7 @@ dependencyResolutionManagement {
         maven {
             url  'https://www.jitpack.io'
         }
+        jcenter()
     }
 }
 rootProject.name = "Github Trending Repo"

@@ -2,4 +2,8 @@
     <string name="app_name">Github Trending Repo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- menu item -->
+    <string name="menu_item_stars">Sort by stars</string>
+    <string name="menu_item_name">Sort by name</string>
 </resources>

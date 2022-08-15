@@ -1,13 +1,11 @@
 package com.example.github_trending_repo
 
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.navigation.fragment.NavHostFragment
 import com.example.github_trending_repo.ui.home.HomeFragment
 
 import org.kodein.di.KodeinAware
@@ -20,6 +18,10 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         setupUI()
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun setupUI() {
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
 }

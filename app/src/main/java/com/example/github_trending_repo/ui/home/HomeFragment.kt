@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_trending_repo.R
 import com.example.github_trending_repo.api.di.viewModel
+import com.example.github_trending_repo.api.entity.TrendingRepository
 import com.example.github_trending_repo.api.repository.ApiCallState
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.home_fragment.*
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -25,6 +30,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
     private val viewModel: HomeViewModel by viewModel()
+    private val repoListAdapter: GroupAdapter<GroupieViewHolder> = GroupAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,38 +44,47 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
         super.onStart()
         setupObserver()
         setupUI()
+        viewModel.getList()
     }
 
 
     private fun setupUI() {
+        rv_repo.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = repoListAdapter
+            repoListAdapter.setOnItemClickListener { item, _ ->
+                (item as? ListCellItem)?.let { repoItem ->
 
-        btn_hello.setOnClickListener{
-            print("111")
-            viewModel.getList()
+                }
+
+            }
         }
     }
 
     private fun setupObserver() {
 
-        viewModel.getListState.observe(viewLifecycleOwner, Observer {
+        viewModel.getListState.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is ApiCallState.ERROR -> {
-                    print("error")
+                    //hideLoading()
                 }
                 is ApiCallState.LOADING -> {
-                    print("loading")
-                    //showLoading()
+                    // showLoading()
                 }
                 is ApiCallState.COMPLETED -> {
-                    print("11111")
-                    print(it.responseResult)
-                    // hideLoading()
-                    //(it.responseResult as? Promotion)?.let {
-                    //findNavController().navigate(HomeFragmentDirections.actionToPromotionDetailFragment(it))
-                    //}
+                    //   hideLoading()
+                    (it.responseResult as? List<*>)?.let { list ->
+                        repoListAdapter.clear()
+                        repoListAdapter.addAll(
+                            list.map { item ->
+                                ListCellItem(item as? TrendingRepository)
+                            }
+                        )
+                    }
                 }
             }
         })
+
     }
 
 

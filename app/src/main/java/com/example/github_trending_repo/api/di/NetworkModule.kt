@@ -3,9 +3,7 @@ package com.example.github_trending_repo.api.di
 import android.content.Context
 import com.example.github_trending_repo.api.network.core.*
 import com.example.github_trending_repo.api.network.service.ContentService
-import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import io.github.wax911.library.converter.GraphConverter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein

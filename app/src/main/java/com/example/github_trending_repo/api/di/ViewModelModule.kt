@@ -20,10 +20,6 @@ private const val MODULE_NAME = "ViewModel Module"
 class ViewModelModule
 val viewModelModule = Kodein.Module(MODULE_NAME, false) {
 
-    bindViewModel<MainViewModel>() with provider {
-        MainViewModel(instance())
-    }
-
     bindViewModel<HomeViewModel>() with provider {
         HomeViewModel(instance())
     }

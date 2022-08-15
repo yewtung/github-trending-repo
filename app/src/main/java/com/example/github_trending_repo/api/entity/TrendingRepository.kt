@@ -13,4 +13,8 @@ import com.google.gson.annotations.SerializedName
     @SerializedName("name")
     @Expose
     var name: String? = null
+
+    @SerializedName("avatar")
+    @Expose
+    var image: String? = null
 }

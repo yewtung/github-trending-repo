@@ -9,19 +9,17 @@ import com.example.github_trending_repo.api.repository.ContentRepository
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(
+class SharedViewModel(
     private val contentRepository: ContentRepository
 
-): ViewModel(){
+) : ViewModel() {
     val getListState = MutableLiveData<ApiCallState>()
-    var repoList = MutableLiveData<List<TrendingRepository>?>()
+    val trendingList = contentRepository.trendingList
+    private var sortingIndex = 0
 
-
-    fun getList()= viewModelScope.launch {
-         getListState.value = ApiCallState.LOADING()
-        val state = contentRepository.getList()
-         if(state is ApiCallState.COMPLETED){
-             getListState.value = state
-         }
+    fun getList(index: Int? = null) = viewModelScope.launch {
+        if(index!=null) sortingIndex = index
+        getListState.value = ApiCallState.LOADING()
+        getListState.value = contentRepository.getList(sortingIndex)
     }
 }

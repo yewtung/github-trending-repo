@@ -13,15 +13,15 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.instanceOrNull
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
-import com.example.github_trending_repo.ui.home.HomeViewModel
+import com.example.github_trending_repo.ui.home.SharedViewModel
 
 private const val MODULE_NAME = "ViewModel Module"
 
 class ViewModelModule
 val viewModelModule = Kodein.Module(MODULE_NAME, false) {
 
-    bindViewModel<HomeViewModel>() with provider {
-        HomeViewModel(instance())
+    bindViewModel<SharedViewModel>() with provider {
+        SharedViewModel(instance())
     }
 
     bind<ViewModelProvider.Factory>() with singleton {

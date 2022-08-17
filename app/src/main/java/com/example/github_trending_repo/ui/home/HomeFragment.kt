@@ -14,7 +14,6 @@ import com.example.github_trending_repo.api.repository.ApiCallState
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.home_fragment.*
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,7 +28,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
     private var cacheView: View? = null
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: SharedViewModel by viewModel()
     private val repoListAdapter: GroupAdapter<GroupieViewHolder> = GroupAdapter()
 
     override fun onCreateView(
@@ -56,32 +55,30 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
     }
 
     private fun setupObserver() {
-
         viewModel.getListState.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is ApiCallState.ERROR -> {
-                    //hideLoading()
+                    // hideLoading()
                 }
                 is ApiCallState.LOADING -> {
-                    // showLoading()
+                    //showLoading()
                 }
                 is ApiCallState.COMPLETED -> {
                     //   hideLoading()
-                    (it.responseResult as? List<*>)?.let { list ->
-                        repoListAdapter.clear()
-                        repoListAdapter.addAll(
-                            list.map { item ->
-                                (item as? TrendingRepository)?.let {
-                                        it1 -> ListCellItem(it1)
-                                }
-                            }
-                        )
-                    }
+
                 }
             }
         })
 
+        viewModel.trendingList.observe(viewLifecycleOwner, Observer {
+            repoListAdapter.clear()
+            repoListAdapter.addAll(
+                it.map { item ->
+                    (item as? TrendingRepository)?.let { it1 ->
+                        ListCellItem(it1)
+                    }
+                }
+            )
+        });
     }
-
-
 }

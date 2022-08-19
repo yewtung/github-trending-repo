@@ -64,11 +64,18 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
             when (it) {
                 is ApiCallState.ERROR -> {
                     swipe_refresh_layout.visibility = View.GONE
+                    error_layout.visibility = View.VISIBLE
                 }
                 is ApiCallState.LOADING -> {
+                    swipe_refresh_layout.visibility = View.GONE
+                    repoListAdapter.clear()
+                    for (i in 1 until 10) {
+                        repoListAdapter.add(LoadingListCellItem())
+                    }
                 }
                 is ApiCallState.COMPLETED -> {
                     swipe_refresh_layout.visibility = View.VISIBLE
+                    error_layout.visibility = View.GONE
                 }
             }
         })

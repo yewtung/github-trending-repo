@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:viewBindingIgnore="true"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/repo_image"
+            android:src="@color/grey_loading"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/loading_first"
+            android:layout_width="100dp"
+            android:layout_height="10dp"
+            android:text="author"
+            android:layout_toRightOf="@+id/repo_image"
+            android:layout_toEndOf="@id/repo_image"
+            android:layout_marginLeft="16dp"
+            android:textSize="12dp"
+            android:textColor="@color/grey_loading"
+            android:background="@drawable/round_corner"/>
+
+        <TextView
+            android:id="@+id/loading_second"
+            android:layout_width="260dp"
+            android:layout_height="10dp"
+            android:text="name"
+            android:layout_toRightOf="@+id/repo_image"
+            android:layout_toEndOf="@id/repo_image"
+            android:layout_below="@id/loading_first"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/grey_loading"
+            android:background="@drawable/round_corner" />
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_view" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

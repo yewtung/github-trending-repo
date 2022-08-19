@@ -7,24 +7,27 @@ import retrofit2.Response
 
 class ContentRepositoryImpl(
     private val contentService: ContentService,
-) :  ContentRepository {
+) : BaseRepository(), ContentRepository {
     override var trendingList = MutableLiveData<List<TrendingRepository>>()
 
     override suspend fun getList(sortingIndex: Int): ApiCallState {
-        val response: List<TrendingRepository> = contentService.getListAsync("daily").await()
-        when (sortingIndex) {
-            1 -> {
-                trendingList.value = response.sortedWith(compareBy { it.stars })
-            }
-            2 -> {
-                trendingList.value = response.sortedWith(compareBy { it.name })
-            }
-            else -> {
-                trendingList.value = response
+        val response: Response<List<TrendingRepository>> =
+            contentService.getListAsync("daily").await()
+        return resolveResponse(response) {
+            response.body()?.let { list ->
+                when (sortingIndex) {
+                   1 -> {
+                        trendingList.value = list.sortedWith(compareBy { it.stars })
+                    }
+                    2 -> {
+                        trendingList.value = list.sortedWith(compareBy { it.name })
+                    }
+                    else -> {
+                        trendingList.value = list
+                    }
+                }
             }
         }
-        return ApiCallState.COMPLETED(response)
-
     }
 
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.github_trending_repo.R
 import com.example.github_trending_repo.api.di.viewModel
 import com.example.github_trending_repo.api.entity.TrendingRepository
@@ -52,20 +53,22 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
             layoutManager = LinearLayoutManager(context)
             adapter = repoListAdapter
         }
+        swipe_refresh_layout.setOnRefreshListener {
+            viewModel.getList()
+            swipe_refresh_layout.isRefreshing = false
+        }
     }
 
     private fun setupObserver() {
         viewModel.getListState.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is ApiCallState.ERROR -> {
-                    // hideLoading()
+                    swipe_refresh_layout.visibility = View.GONE
                 }
                 is ApiCallState.LOADING -> {
-                    //showLoading()
                 }
                 is ApiCallState.COMPLETED -> {
-                    //   hideLoading()
-
+                    swipe_refresh_layout.visibility = View.VISIBLE
                 }
             }
         })

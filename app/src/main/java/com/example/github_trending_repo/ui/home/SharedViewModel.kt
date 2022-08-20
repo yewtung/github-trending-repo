@@ -36,7 +36,7 @@ class SharedViewModel(
         }
     }
 
-    fun getList(index: Int? = null,  context:Context) = viewModelScope.launch {
+    fun getList(index: Int? = null, context: Context) = viewModelScope.launch {
         getListState.value = ApiCallState.LOADING()
         if (index != null) sortingIndex = index
         try {
@@ -47,8 +47,8 @@ class SharedViewModel(
             }
         } catch (t: Throwable) {
             when (t) {
-                is IOException -> ApiCallState.ERROR("Network  failure")
-                else -> ApiCallState.ERROR("error")
+                is IOException -> getListState.value = ApiCallState.ERROR("Network  failure")
+                else -> getListState.value = ApiCallState.ERROR("error")
             }
         }
         print(getListState.value)
@@ -66,7 +66,7 @@ class SharedViewModel(
         return list
     }
 
-    fun insertTrendingRepository(entity: TrendingRepository , context:Context) {
+    fun insertTrendingRepository(entity: TrendingRepository, context: Context) {
         val trendingRepositoryDao = RoomDB.getAppDatabase(context)?.trendingRepositoryDao()
         trendingRepositoryDao?.insertUser(entity)
         getTrendingList()
@@ -83,7 +83,7 @@ class SharedViewModel(
         trendingRepositoryDao?.deleteUser(entity)
     }
 
-    private fun hasInternetConnection(context:Context): Boolean {
+    private fun hasInternetConnection(context: Context): Boolean {
 //        val connectivityManager = getApplication<MyApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 //        connectivityManager.activeNetworkInfo?.run {
 //            return when (type){

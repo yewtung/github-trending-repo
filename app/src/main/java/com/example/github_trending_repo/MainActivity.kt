@@ -1,7 +1,7 @@
 package com.example.github_trending_repo
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -21,7 +21,9 @@ import org.kodein.di.android.kodein
 class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
     private val viewModel: SharedViewModel by viewModel()
-
+    private var mRepeatHandler: Handler? = null
+    private var mRepeatRunnable: Runnable? = null
+    private val UPDATE_INTERVAL = 2*3600000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,18 @@ class MainActivity : AppCompatActivity(), KodeinAware {
                 add<HomeFragment>(R.id.fragment_main)
             }
         }
+        refresh()
     }
+
+    private fun refresh() {
+        mRepeatHandler = Handler()
+        mRepeatRunnable = Runnable { //Do something awesome
+            viewModel.getList(context = applicationContext)
+            mRepeatHandler!!.postDelayed(mRepeatRunnable!!, UPDATE_INTERVAL.toLong());
+        }
+        mRepeatHandler!!.postDelayed(mRepeatRunnable!!, UPDATE_INTERVAL.toLong());
+    }
+
     private fun setupUI() {
     }
 

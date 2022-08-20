@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.github_trending_repo.MyApplication
 import org.kodein.di.DKodein
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -21,7 +22,7 @@ class ViewModelModule
 val viewModelModule = Kodein.Module(MODULE_NAME, false) {
 
     bindViewModel<SharedViewModel>() with provider {
-        SharedViewModel(instance())
+        SharedViewModel(instance(), MyApplication())
     }
 
     bind<ViewModelProvider.Factory>() with singleton {

@@ -7,7 +7,7 @@ import retrofit2.Response
 
 class ContentRepositoryImpl(
     private val contentService: ContentService,
-) : BaseRepository(), ContentRepository {
+    ) : BaseRepository(), ContentRepository {
     override var trendingList = MutableLiveData<List<TrendingRepository>>()
 
     override suspend fun getList(sortingIndex: Int): ApiCallState {
@@ -16,7 +16,7 @@ class ContentRepositoryImpl(
         return resolveResponse(response) {
             response.body()?.let { list ->
                 when (sortingIndex) {
-                   1 -> {
+                    1 -> {
                         trendingList.value = list.sortedWith(compareBy { it.stars })
                     }
                     2 -> {
@@ -29,6 +29,4 @@ class ContentRepositoryImpl(
             }
         }
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.example.github_trending_repo.api.network.core
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.example.github_trending_repo.database.RoomDB
 import okhttp3.Interceptor
 import okhttp3.Response
 

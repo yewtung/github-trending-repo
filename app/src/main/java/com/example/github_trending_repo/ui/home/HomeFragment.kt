@@ -44,7 +44,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
         super.onStart()
         setupObserver()
         setupUI()
-        viewModel.getList()
+        viewModel.getList(0, requireContext())
     }
 
 
@@ -54,7 +54,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
             adapter = repoListAdapter
         }
         swipe_refresh_layout.setOnRefreshListener {
-            viewModel.getList()
+            viewModel.getList(0, requireContext())
             swipe_refresh_layout.isRefreshing = false
         }
     }
@@ -80,15 +80,24 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
             }
         })
 
+        viewModel.mediator.observe(viewLifecycleOwner, Observer {})
+
         viewModel.trendingList.observe(viewLifecycleOwner, Observer {
             repoListAdapter.clear()
-            repoListAdapter.addAll(
+            if (it != null) {
+                repoListAdapter.addAll(
+                    it.map { item ->
+                        (item as? TrendingRepository)?.let { it1 ->
+                            ListCellItem(it1)
+                        }
+                    }
+                )
                 it.map { item ->
                     (item as? TrendingRepository)?.let { it1 ->
-                        ListCellItem(it1)
+                        viewModel.insertTrendingRepository(it1, requireContext())
                     }
                 }
-            )
+            }
         });
     }
 }

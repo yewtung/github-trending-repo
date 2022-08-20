@@ -1,5 +1,6 @@
 package com.example.github_trending_repo
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -20,6 +21,8 @@ import org.kodein.di.android.kodein
 class MainActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
     private val viewModel: SharedViewModel by viewModel()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +62,11 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         // Handle item selection
         return when (item.itemId) {
             R.id.menu_item_stars -> {
-                viewModel.getList(1)
+                viewModel.getList(1, applicationContext)
                 true
             }
             R.id.menu_item_name -> {
-                viewModel.getList(2)
+                viewModel.getList(2, applicationContext)
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
                     error_layout.visibility = View.VISIBLE
                 }
                 is ApiCallState.LOADING -> {
-                    swipe_refresh_layout.visibility = View.GONE
+                    swipe_refresh_layout.isEnabled = false
                     repoListAdapter.clear()
                     for (i in 1 until 10) {
                         repoListAdapter.add(LoadingListCellItem())

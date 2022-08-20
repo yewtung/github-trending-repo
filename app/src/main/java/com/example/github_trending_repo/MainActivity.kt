@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     private val viewModel: SharedViewModel by viewModel()
     private var mRepeatHandler: Handler? = null
     private var mRepeatRunnable: Runnable? = null
-    private val UPDATE_INTERVAL = 2*3600000
+    private val UPDATE_INTERVAL = 2 * 3600000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

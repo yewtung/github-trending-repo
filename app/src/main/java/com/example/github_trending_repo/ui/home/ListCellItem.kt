@@ -17,9 +17,7 @@ open class ListCellItem(
         viewHolder.apply {
             repo_author.text = repo.author
             repo_name.text = repo.name
-            Glide.with(viewHolder.root.context)
-                .load(repo.image)
-                .into(repo_image)
+
             repo_stars.text = repo.stars.toString()
             repo_fork.text = repo.forks.toString()
             repo_language.text = repo.language

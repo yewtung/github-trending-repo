@@ -22,7 +22,7 @@ class NetworkModule
 private const val TAG_SERVER_URL = "server_url_const"
 const val NETWORK_AVAILABLE_AGE = 60
 private val SERVER_ERROR_CODES = listOf(404, 504, 400, 401, 500, 403)
-private val url = "https://private-anon-fc551db9c8-githubtrendingapi.apiary-mock.com"
+private val url = "https://gh-trending-api.herokuapp.com"
 
 val networkModule = Kodein.Module(MODULE_NAME, false) {
     bind<ConnectivityInterceptor>() with singleton {

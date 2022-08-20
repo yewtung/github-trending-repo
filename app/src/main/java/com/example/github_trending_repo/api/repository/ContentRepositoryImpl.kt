@@ -12,7 +12,7 @@ class ContentRepositoryImpl(
 
     override suspend fun getList(sortingIndex: Int): ApiCallState {
         val response: Response<List<TrendingRepository>> =
-            contentService.getListAsync("daily").await()
+            contentService.getListAsync("monthly").await()
         return resolveResponse(response) {
             response.body()?.let { list ->
                 when (sortingIndex) {

@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.github_trending_repo.api.entity.TrendingRepository
 
 
-@Database(entities = [TrendingRepository::class], version = 4)
+@Database(entities = [TrendingRepository::class], version = 1)
 abstract class RoomDB : RoomDatabase() {
 
     abstract fun trendingRepositoryDao():  TrendingRepositoryDao?
@@ -17,7 +17,7 @@ abstract class RoomDB : RoomDatabase() {
     companion object {
         private var INSTANCE: RoomDB? = null
 
-        val migration_1_4: Migration = object : Migration(1, 4) {
+        val migration_1_2: Migration = object : Migration(1,2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 //database.execSQL("ALTER TABLE trending_repo ADD COLUMN phone TEXT DEFAULT ''")
             }
@@ -30,7 +30,7 @@ abstract class RoomDB : RoomDatabase() {
                 INSTANCE = Room.databaseBuilder<RoomDB>(
                     context.applicationContext, RoomDB::class.java, "AppDBB"
                 )
-                    .addMigrations(migration_1_4)
+                    .addMigrations(migration_1_2)
                     .allowMainThreadQueries()
                     .build()
 

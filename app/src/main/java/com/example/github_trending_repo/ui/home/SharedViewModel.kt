@@ -1,12 +1,10 @@
 package com.example.github_trending_repo.ui.home
 
 import android.app.Application
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -54,16 +52,10 @@ class SharedViewModel(
         print(getListState.value)
     }
 
-    fun getTrendingListObservers(): MutableLiveData<List<TrendingRepository>> {
-        return trendingList
-    }
-
     private fun getTrendingList(): List<TrendingRepository>? {
         val trendingRepositoryDao =
             RoomDB.getAppDatabase((getApplication()))?.trendingRepositoryDao()
-        val list = trendingRepositoryDao?.getAllUserInfo()
-        print(list)
-        return list
+        return trendingRepositoryDao?.getAllUserInfo()?.let { filterList(it) }
     }
 
     fun insertTrendingRepository(entity: TrendingRepository, context: Context) {
@@ -73,27 +65,7 @@ class SharedViewModel(
         print(entity);
     }
 
-    fun updateTrendingRepository(entity: TrendingRepository) {
-        val trendingRepositoryDao = RoomDB.getAppDatabase(getApplication())?.trendingRepositoryDao()
-        trendingRepositoryDao?.updateUser(entity)
-    }
-
-    fun deleteTrendingRepository(entity: TrendingRepository) {
-        val trendingRepositoryDao = RoomDB.getAppDatabase(getApplication())?.trendingRepositoryDao()
-        trendingRepositoryDao?.deleteUser(entity)
-    }
-
     private fun hasInternetConnection(context: Context): Boolean {
-//        val connectivityManager = getApplication<MyApplication>().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        connectivityManager.activeNetworkInfo?.run {
-//            return when (type){
-//                TYPE_WIFI -> true
-//                TYPE_MOBILE -> true
-//                TYPE_ETHERNET -> true
-//                else -> false
-//            }
-//        }
-//        return false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -116,8 +88,18 @@ class SharedViewModel(
         return false
     }
 
-    fun safeCallGetList(index: Int?) = viewModelScope.launch {
-        getListState.value = ApiCallState.LOADING()
+    private fun filterList(list: List<TrendingRepository>): List<TrendingRepository> {
+        return when (sortingIndex) {
+            1 -> {
+                list.sortedWith(compareBy { it.stars })
+            }
+            2 -> {
+                list.sortedWith(compareBy { it.name })
+            }
+            else -> {
+                list
+            }
+        }
 
     }
 }

@@ -57,6 +57,10 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
             viewModel.getList(0, requireContext())
             swipe_refresh_layout.isRefreshing = false
         }
+
+        btn_retry.setOnClickListener{
+            viewModel.getList(0, requireContext())
+        }
     }
 
     private fun setupObserver() {
@@ -74,6 +78,7 @@ class HomeFragment : Fragment(), CoroutineScope, KodeinAware {
                     }
                 }
                 is ApiCallState.COMPLETED -> {
+                    swipe_refresh_layout.isEnabled = true
                     swipe_refresh_layout.visibility = View.VISIBLE
                     error_layout.visibility = View.GONE
                 }

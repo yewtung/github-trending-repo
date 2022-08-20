@@ -21,11 +21,9 @@ open class BaseListCellItem(
         viewHolder.apply {
             if (isExpand) {
                 expand_view.visibility = View.VISIBLE
-                divider.visibility = View.GONE
                 if (isAnimate) {
                     expand_view.alpha = 0f
                     expand_view.animate().alpha(1f)
-                   ViewCompat.setElevation(item_list_cell_layout, 5f)
                 }
             } else {
                 if (isAnimate) {
@@ -37,8 +35,6 @@ open class BaseListCellItem(
                 } else {
                     expand_view.visibility = View.GONE
                 }
-                divider.visibility = View.VISIBLE
-                ViewCompat.setElevation(item_list_cell_layout, 0f)
             }
         }
     }

@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:viewBindingIgnore="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:paddingBottom="16dp">
 
     <RelativeLayout
         android:id="@+id/top_view"
@@ -30,10 +31,11 @@
             android:text="author"
             android:layout_toRightOf="@+id/repo_image"
             android:layout_toEndOf="@id/repo_image"
-            android:layout_marginLeft="16dp"
             android:textSize="12dp"
             android:textColor="@color/grey_loading"
-            android:background="@drawable/round_corner"/>
+            android:background="@drawable/round_corner"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="6dp"/>
 
         <TextView
             android:id="@+id/loading_second"

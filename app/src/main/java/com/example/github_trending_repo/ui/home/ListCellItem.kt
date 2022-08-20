@@ -6,7 +6,6 @@ import com.example.github_trending_repo.api.entity.TrendingRepository
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.item_list_cell.*
 
-
 open class ListCellItem(
     var repo: TrendingRepository
 ) : BaseListCellItem() {
@@ -25,7 +24,7 @@ open class ListCellItem(
             repo_fork.text = repo.forks.toString()
             repo_language.text = repo.language
 
-            top_view.setOnClickListener{
+            top_view.setOnClickListener {
                 repo.isExpand = !repo.isExpand
                 expand(repo.isExpand, this, true)
             }

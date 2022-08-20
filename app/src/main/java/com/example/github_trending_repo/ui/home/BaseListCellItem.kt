@@ -1,9 +1,8 @@
 package com.example.github_trending_repo.ui.home
 
 import android.view.View
-import com.bumptech.glide.Glide
+import androidx.core.view.ViewCompat
 import com.example.github_trending_repo.R
-import com.example.github_trending_repo.api.entity.TrendingRepository
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_list_cell.*
@@ -22,9 +21,11 @@ open class BaseListCellItem(
         viewHolder.apply {
             if (isExpand) {
                 expand_view.visibility = View.VISIBLE
+                divider.visibility = View.GONE
                 if (isAnimate) {
                     expand_view.alpha = 0f
                     expand_view.animate().alpha(1f)
+                   ViewCompat.setElevation(item_list_cell_layout, 5f)
                 }
             } else {
                 if (isAnimate) {
@@ -36,6 +37,8 @@ open class BaseListCellItem(
                 } else {
                     expand_view.visibility = View.GONE
                 }
+                divider.visibility = View.VISIBLE
+                ViewCompat.setElevation(item_list_cell_layout, 0f)
             }
         }
     }
